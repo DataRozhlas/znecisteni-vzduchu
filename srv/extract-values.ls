@@ -4,8 +4,9 @@ files = fs.readdirSync dir
 # files.length = 1
 out = []
 stations = <[d m y h i]>
+stationCoords = {}
 lastHour = null
-compontentCode = "O3"
+compontentCode = "PM10"
 for file in files
   data = JSON.parse fs.readFileSync "#dir/#file"
   # [region] = data.States.0.Regions
@@ -28,10 +29,11 @@ for file in files
     for station in region.Stations
       # time = date.getTime!
       # d = new Date date.replace " SEČ" ""
-      index = stations.indexOf station.Name
       continue unless station.Components
+      index = stations.indexOf station.Name
       if index == -1
         index = (stations.push station.Name) - 1
+        # stationCoords[station.Name] = [station.Lat, station.Lon]
       for compontent in  station.Components
         if compontent.Code == compontentCode and compontent.Int == "1h" and compontent.Ix > 0
           # console.log compontent
@@ -43,3 +45,5 @@ for file in files
   out.push line.join "\t"
 out.unshift stations.join "\t"
 fs.writeFileSync "#__dirname/../data/#{compontentCode}.tsv", out.join "\n"
+
+# fs.writeFileSync "#__dirname/../data/coords.json", JSON.stringify stationCoords
