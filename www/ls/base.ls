@@ -34,4 +34,5 @@ stations.forEach (station) ->
   marker = L.marker station.latLng
     ..addTo map
     ..on \click ->
-       displayStation station
+       ig.displayStation station
+ig.displayStation stations.0

@@ -12,6 +12,8 @@ externalStyles =
 
 externalData =
   "coords": "#__dirname/data/coords.json"
+  "pm10": "#__dirname/data/pm10.tsv"
+  "no2": "#__dirname/data/no2.tsv"
 
 preferScripts = <[ utils.js postInit.js _loadData.js ../data.js init.js _loadExternal.js]>
 deferScripts = <[ geoUtils.js base.js ]>
