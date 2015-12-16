@@ -99,8 +99,13 @@ container.append \ul
         o += "<br>prosince"
       o
     ..style \left -> "#{it.index}px"
-
+overlay = container.append \div
+  ..attr \id \overlay
+  ..append \h2 .html "Kliknutím na měřící stanici si zobrazte historii jejích měření"
+iterations = 0
 ig.displayStation = (station, particle) ->
+  overlay.remove! if iterations is 1
+  iterations++
   currentParticle := particle if particle
   currentStation  := station if station
   header.html currentStation.name
