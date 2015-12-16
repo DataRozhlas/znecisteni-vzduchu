@@ -103,6 +103,30 @@ overlay = container.append \div
   ..attr \id \overlay
   ..append \h2 .html "Kliknutím na měřící stanici si zobrazte historii jejích měření"
 iterations = 0
+offset = null
+computeOffset = ->
+  offset := ig.utils.offset canvas.node!
+computeOffset!
+setInterval computeOffset, 1000
+tooltip = new ig.GraphTip container
+toDouble = -> if it < 9 then "0#it" else it
+canvas
+  ..on \mouseout tooltip~hide
+  ..on \mousemove ->
+      pointedY = y = (d3.event.pageY - offset.top)
+      pointedX = d3.event.pageX - offset.left
+      row = data[currentParticle][pointedX]
+      return unless row
+      value = row[currentStation.name]
+      message = if isNaN value
+        "Neměřeno"
+      else
+        "#{value} µg #{currentParticle.toUpperCase!}/m³"
+      tooltip.display do
+        pointedX + 10
+        19 + yScale[currentParticle] value
+        "#{row.d}. #{row.m}. #{toDouble row.h}:#{toDouble row.i}<br>" + message
+
 ig.displayStation = (station, particle) ->
   overlay.remove! if iterations is 1
   iterations++
@@ -110,7 +134,7 @@ ig.displayStation = (station, particle) ->
   currentStation  := station if station
   header.html currentStation.name
   ctx.clearRect 0, 0, width, height
-  for row, index in data.pm10
+  for row, index in data[currentParticle]
     value = row[currentStation.name]
     ctx
       ..beginPath!
