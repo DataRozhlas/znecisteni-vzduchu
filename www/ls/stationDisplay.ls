@@ -70,13 +70,35 @@ particleNotes[currentParticle].classed \active yes
 currentStation = null
 legend = container.append \ul
   ..attr \id \legend
-console.log colorScale[currentParticle].domain!
+
 legend.selectAll \li .data colorScale[currentParticle].domain! .enter!append \li
   ..append \div
     ..attr \class \color
     ..style \background-color (d, i) -> colors[i]
   ..append \span
     ..attr \class \label
+days = []
+lastDay = null
+for {d, m}, index in data.no2
+  continue if d is 9 and m is 11
+  continue if d is 18 and m is 11
+  continue if d is 22 and m is 11
+  continue if d is 26 and m is 11
+  if lastDay != d
+    days.push {d, m, index}
+    lastDay = d
+container.append \ul
+  ..attr \class \x-axis
+  ..selectAll \li .data days .enter!append \li
+    ..html ->
+      o = it.d
+      o += "."
+      if it.d == 10 and it.m == 11
+        o += "<br>listopadu"
+      if it.d == 1 and it.m == 12
+        o += "<br>prosince"
+      o
+    ..style \left -> "#{it.index}px"
 
 ig.displayStation = (station, particle) ->
   currentParticle := particle if particle
