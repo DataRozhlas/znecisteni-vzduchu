@@ -135,14 +135,22 @@ ig.displayStation = (station, particle) ->
   currentStation  := station if station
   header.html currentStation.name
   ctx.clearRect 0, 0, width, height
+  validValues = 0
   for row, index in data[currentParticle]
     value = row[currentStation.name]
+    continue if isNaN value
+    validValues++
     ctx
       ..beginPath!
       ..strokeStyle = colorScale[currentParticle] value
       ..moveTo index, height
       ..lineTo index, yScale[currentParticle] value
       ..stroke!
+  if validValues is 0
+    ctx
+      ..font = "bold 16px arial"
+      ..fillStyle = \#333
+      ..fillText "Stanice tuto veličinu neměří", 240, 120
   legend.selectAll \li .data colorScale[currentParticle].domain!
     ..style \top -> "#{yScale[currentParticle] it}px"
     ..select \span.label
