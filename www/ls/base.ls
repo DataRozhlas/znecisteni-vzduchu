@@ -24,14 +24,34 @@ labelLayer = L.tileLayer do
 map
   ..addLayer baseLayer
   ..addLayer labelLayer
-
+console.log ig.data.parsed.pm10.0
+getAverage = (name) ->
+  sum = 0
+  length = 0
+  for row in ig.data.parsed.pm10
+    value = row[name]
+    continue if isNaN value
+    sum += value
+    length++
+  if length then sum / length else null
 stations = for name, coords of ig.data.coords
   latLng = L.latLng coords
   continue unless coords.0
-  {name, coords, latLng}
-
+  average = if ig.data.parsed.pm10[0][name] isnt void
+    getAverage name
+  else
+    null
+  {name, coords, latLng, average}
+radius = 10
 stations.forEach (station) ->
-  marker = L.marker station.latLng
+  color = if station.average isnt null
+    ig.colorScale.pm10 station.average
+  else
+    '#aaa'
+  icon = L.divIcon do
+    html: "<div style='background-color: #color;'></div>"
+    iconSize: [radius + 10, radius + 10]
+  marker = L.marker station.latLng, {icon}
     ..addTo map
     ..on \click ->
        ig.displayStation station

@@ -47,9 +47,10 @@ for particle in <[pm10 no2]>
     for field, value of row
       row[field] = parseFloat value
     row
+ig.data.parsed = data
 
 colors = ['#d73027','#fc8d59','#fee08b','#d9ef8b','#91cf60','#1a9850'].reverse!
-colorScale = {}
+ig.colorScale = colorScale = {}
   ..no2 = d3.scale.threshold!
     ..domain [25 50 100 200 400]
     ..range colors
