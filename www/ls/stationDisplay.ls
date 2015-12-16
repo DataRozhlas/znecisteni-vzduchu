@@ -11,6 +11,7 @@ particleNotes = {}
       ..attr \href \#
       ..html "polétavého prachu PM10"
       ..on \click ->
+        d3.event.preventDefault!
         particleNotes[currentParticle].classed \active no
         ig.displayStation null, "pm10"
         particleNotes[currentParticle].classed \active yes
@@ -21,6 +22,7 @@ particleNotes = {}
       ..attr \href \#
       ..html "NO<sub>2</sub>"
       ..on \click ->
+        d3.event.preventDefault!
         particleNotes[currentParticle].classed \active no
         ig.displayStation null, "no2"
         particleNotes[currentParticle].classed \active yes
