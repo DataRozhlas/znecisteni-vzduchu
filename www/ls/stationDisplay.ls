@@ -25,7 +25,6 @@ particleNotes = {}
         ig.displayStation null, "no2"
         particleNotes[currentParticle].classed \active yes
     ..append \span .html "."
-    # ..on \click
 
 
 width = 784
@@ -58,9 +57,27 @@ colorScale = {}
     ..domain [15 30 50 70 150]
     ..range colors
 
+humanLevels =
+  "velmi dobrá"
+  "dobrá"
+  "uspokojivá"
+  "vyhovující"
+  "špatná"
+  "velmi špatná"
+
 currentParticle = "no2"
 particleNotes[currentParticle].classed \active yes
 currentStation = null
+legend = container.append \ul
+  ..attr \id \legend
+console.log colorScale[currentParticle].domain!
+legend.selectAll \li .data colorScale[currentParticle].domain! .enter!append \li
+  ..append \div
+    ..attr \class \color
+    ..style \background-color (d, i) -> colors[i]
+  ..append \span
+    ..attr \class \label
+
 ig.displayStation = (station, particle) ->
   currentParticle := particle if particle
   currentStation  := station if station
@@ -74,3 +91,7 @@ ig.displayStation = (station, particle) ->
       ..moveTo index, height
       ..lineTo index, yScale[currentParticle] value
       ..stroke!
+  legend.selectAll \li .data colorScale[currentParticle].domain!
+    ..style \top -> "#{yScale[currentParticle] it}px"
+    ..select \span.label
+      ..html (d, i) -> "#{humanLevels[i]} (#d µg/m³)"

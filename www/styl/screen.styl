@@ -20,6 +20,7 @@
     border-top 1px solid #e0
     z-index 2
     padding 10px
+    overflow hidden
     h2
       font-size 16px
       font-weight bold
@@ -32,4 +33,24 @@
       display none
       &.active
         display block
-
+    canvas
+      position absolute
+      bottom 30px
+      left 10px
+    #legend
+      margin 0px
+      position absolute
+      bottom 30px
+      right 10px
+      height 200px
+      width 190px
+      li
+        position absolute
+        left 0px
+        list-style-type none
+        .color
+          position absolute
+          top 0px
+          left 0px
+          height 2px
+          width 100%
