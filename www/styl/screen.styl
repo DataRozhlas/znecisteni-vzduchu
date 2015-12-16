@@ -31,12 +31,17 @@
       float left
       margin 1px 0px 0px 10px
       display none
+      z-index 2
+      position relative
       &.active
         display block
+      a:hover
+        text-decoration none
     canvas
       position absolute
       bottom 30px
       left 10px
+      z-index 1
     #legend
       margin 0px
       position absolute
@@ -82,3 +87,4 @@
       bottom 0px
       background rgba(#fa, 0.90)
       padding 10px
+      z-index 5
