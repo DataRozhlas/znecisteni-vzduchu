@@ -24,7 +24,7 @@ labelLayer = L.tileLayer do
 map
   ..addLayer baseLayer
   ..addLayer labelLayer
-console.log ig.data.parsed.pm10.0
+
 getAverage = (name) ->
   sum = 0
   length = 0
