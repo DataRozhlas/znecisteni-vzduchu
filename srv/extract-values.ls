@@ -43,6 +43,7 @@ for file in files
           line[index] = compontent.Val
           break
   out.push line.join "\t"
+out.slice 149
 out.unshift stations.join "\t"
 fs.writeFileSync "#__dirname/../data/#{compontentCode}.tsv", out.join "\n"
 

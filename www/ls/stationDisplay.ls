@@ -68,7 +68,7 @@ humanLevels =
   "špatná"
   "velmi špatná"
 
-currentParticle = "no2"
+currentParticle = "pm10"
 particleNotes[currentParticle].classed \active yes
 currentStation = null
 legend = container.append \ul
