@@ -1,4 +1,5 @@
 L.Icon.Default.imagePath = "https://samizdat.cz/tools/leaflet/images/"
+return if window.location.hash == \#hodiny
 container = d3.select ig.containers.base
 mapElement = container.append \div
   ..attr \id \map

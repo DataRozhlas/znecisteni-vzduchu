@@ -1,3 +1,4 @@
+return if window.location.hash == \#hodiny
 container = d3.select ig.containers.base .append \div
   ..attr \id \detail
 
@@ -43,13 +44,7 @@ yScale.no2 = d3.scale.linear!
 yScale.pm10 = d3.scale.linear!
   ..range [0 height]
   ..domain [200 0]
-data = {}
-for particle in <[pm10 no2]>
-  data[particle] = d3.tsv.parse ig.data[particle], (row) ->
-    for field, value of row
-      row[field] = parseFloat value
-    row
-ig.data.parsed = data
+data = ig.data.parsed
 
 colors = ['#d73027','#fc8d59','#fee08b','#d9ef8b','#91cf60','#1a9850'].reverse!
 ig.colorScale = colorScale = {}
@@ -112,7 +107,7 @@ computeOffset = ->
 computeOffset!
 setInterval computeOffset, 1000
 tooltip = new ig.GraphTip container
-toDouble = -> if it < 9 then "0#it" else it
+toDouble = -> if it <= 9 then "0#it" else it
 canvas
   ..on \mouseout tooltip~hide
   ..on \mousemove ->

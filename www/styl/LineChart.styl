@@ -1,0 +1,55 @@
+Colors = ColorRed ColorBlue
+
+svg
+  .axes
+    line
+      shape-rendering crispEdges
+    line.domain
+      stroke #c
+    g.extent
+      line.extent
+        stroke-opacity 0.5
+      for Color, i in Colors
+        &:nth-child({i + 1})
+          line.extent
+          line.tick
+            stroke Color
+    .axis.y
+      g.tick
+        text
+          opacity 0
+        &:nth-child(1)
+        &:nth-last-child(1)
+          text
+            opacity 1
+  .lines
+    g.line
+      path
+        fill none
+      circle
+        fill white
+      for Color, i in Colors
+        &:nth-child({i + 1})
+          path
+          circle
+            stroke Color
+  .interaction
+    .voronoi
+      path
+        fill transparent
+  .highlight-lines
+    .lines line
+      shape-rendering crispEdges
+  &.active
+    .highlight-lines .lines line
+      stroke #c
+    for Color, i in Colors
+      .lines g.line:nth-child({i + 1})
+        circle.active
+          fill Color
+    .axes .axis.y g.tick text
+    .axes .axis.x g.tick text
+      opacity 0
+    .axes .axis.y g.tick.active text
+    .axes .axis.x g.tick.active text
+      opacity 1 !important
